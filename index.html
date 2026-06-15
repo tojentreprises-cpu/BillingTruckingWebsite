@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Billing Trucking Inc. — Direction 3A · Horizontal Story</title>
+<meta name="description" content="Billing Trucking Inc. — temperature-controlled produce and food-grade freight out of Turlock, California. Horizontal storytelling experience."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="horizontal.css"/>
+<script src="https://player.vimeo.com/api/player.js"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+/* Timeline safety net: if rAF never ticks, force scroll-reveal content visible. */
+(function(){
+  var ticked = false;
+  try{ requestAnimationFrame(function(){ ticked = true; }); }catch(e){ ticked = false; }
+  setTimeout(function(){ if(!ticked && document.body){ document.body.classList.add('no-anim'); } }, 400);
+})();
+</script>
+
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#3a1414"/>
+  <text x="50" y="58" font-family="Georgia, serif" font-size="44" font-weight="700" fill="#f4efe9" text-anchor="middle">B</text>
+  <path d="M22 70h56M70 64l10 6-10 6" stroke="#c9897f" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</template>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script>
+/* Reliable sequential JSX loader */
+(function(){
+  var FILES = ['js/utils.jsx','js/heroes.jsx','js/sections.jsx','js/contact.jsx','js/horizontal.jsx','js/app-horizontal.jsx'];
+  async function fetchText(url, tries){
+    tries = tries||3;
+    for(var i=0;i<tries;i++){
+      try{ var r = await fetch(url, {cache:'no-cache'}); if(r.ok) return await r.text(); }
+      catch(e){}
+      await new Promise(function(res){ setTimeout(res, 250*(i+1)); });
+    }
+    throw new Error('Failed to load '+url);
+  }
+  async function boot(){
+    if(!window.Babel){ setTimeout(boot, 50); return; }
+    try{
+      for(var i=0;i<FILES.length;i++){
+        var src = await fetchText(FILES[i]);
+        var code = Babel.transform(src, {presets:['react'], filename:FILES[i]}).code;
+        var s = document.createElement('script');
+        s.textContent = '//# sourceURL='+FILES[i]+'\n'+code;
+        document.body.appendChild(s);
+      }
+    }catch(err){
+      console.error(err);
+      document.getElementById('root').innerHTML = '<div style="padding:40px;font-family:monospace;color:#900">Load error: '+err.message+'</div>';
+    }
+  }
+  boot();
+})();
+</script>
+</body>
+</html>
